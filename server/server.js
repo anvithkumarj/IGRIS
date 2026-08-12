@@ -12,7 +12,7 @@ import { env } from 'node:process'
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT || 3001;
+const PORT = globalThis.process?.env?.PORT || 3001;
 
 // =========================
 // PATHS
@@ -28,6 +28,10 @@ if (!fs.existsSync(audioFolder)) {
 }
 
 app.use('/audio', express.static(audioFolder))
+
+const frontendFolder = path.join(__dirname, '..', 'dist')
+
+app.use(express.static(frontendFolder))
 
 app.use(cors())
 app.use(express.json())
@@ -271,6 +275,12 @@ ${question}
 
   }
 
+})
+
+app.get(/.*/, (req, res) => {
+  res.sendFile(
+    path.join(frontendFolder, 'index.html')
+  )
 })
 
 //====================================================================part 4

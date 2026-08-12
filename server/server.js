@@ -12,7 +12,7 @@ import { env } from 'node:process'
 dotenv.config()
 
 const app = express()
-const PORT = 3001
+const PORT = process.env.PORT || 3001;
 
 // =========================
 // PATHS

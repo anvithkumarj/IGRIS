@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
+const API_BASE_URL = import.meta.env.DEV
+  ? "http://localhost:3001"
+  : "";
 
 const LANGUAGE_CONFIG = {
   English: { code: "en-US", native: "English" },
@@ -221,7 +224,7 @@ const activeRef = useRef(false);
         const audioUrl =
           /^https?:\/\//i.test(audioPath)
             ? audioPath
-            : `http://localhost:3001${audioPath}`;
+            : `${API_BASE_URL}${audioPath}`;
 
         const audio = new Audio(audioUrl);
 
@@ -440,8 +443,8 @@ handleRecognizedSpeechRef.current?.(finalText.trim(), mode);
       setError("");
 
       try {
-        const response = await fetch(
-          "http://localhost:3001/api/ask",
+       const response = await fetch(
+  `${API_BASE_URL}/api/ask`,
           {
             method: "POST",
 

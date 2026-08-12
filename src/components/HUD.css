@@ -1,0 +1,141 @@
+/* ========================= */
+/* WORKSPACE */
+/* ========================= */
+
+.workspace{
+    position:absolute;
+    inset:0;
+
+    display:grid;
+    grid-template-columns:260px 1fr 360px;
+
+    align-items:center;
+
+    padding:30px;
+    gap:20px;
+
+    overflow:visible;
+}
+
+/* ========================= */
+/* LEFT */
+/* ========================= */
+
+.left-column{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100%;
+}
+
+/* ========================= */
+/* CENTER */
+/* ========================= */
+
+.center-column{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+
+    height:100%;
+
+    padding-top:20px;
+
+    gap:20px;
+
+    overflow:visible;
+}
+
+/* ========================= */
+/* HUD */
+/* ========================= */
+
+.hud{
+    position:relative;
+
+    width:420px;
+    height:420px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    flex-shrink:0;
+}
+
+/* ========================= */
+/* SYSTEM INFO */
+/* ========================= */
+
+.system-info{
+    text-align:center;
+
+    color:#bffcff;
+}
+
+.system-info h1{
+    font-size:40px;
+    letter-spacing:4px;
+}
+
+.system-info p{
+    font-size:14px;
+    opacity:.8;
+}
+
+/* ========================= */
+/* BUTTONS */
+/* ========================= */
+
+.button-group{
+    display:flex;
+    flex-direction:column;
+
+    gap:15px;
+
+    margin-top:20px;
+
+    width:320px;
+
+    position:relative;
+
+    z-index:9999;
+}
+
+.button-group button{
+    height:55px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:#0099cc;
+
+    transition:.25s;
+}
+
+.button-group button:hover{
+    background:#00d9ff;
+    transform:scale(1.03);
+}
+
+/* ========================= */
+/* RIGHT */
+/* ========================= */
+
+.right-column{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:100%;
+}

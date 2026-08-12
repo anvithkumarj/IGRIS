@@ -1,0 +1,324 @@
+.core{
+
+position:relative;
+
+width:220px;
+
+height:220px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+/* ====================== */
+
+.core-glow{
+
+position:absolute;
+
+width:180px;
+
+height:180px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(circle,
+
+rgba(0,255,255,.35),
+
+transparent 70%);
+
+filter:blur(35px);
+
+animation:glow 3s infinite;
+
+}
+
+/* ====================== */
+
+.brain-shell{
+
+position:absolute;
+
+width:140px;
+
+height:140px;
+
+border-radius:50%;
+
+border:2px solid rgba(0,255,255,.35);
+
+animation:rotate1 16s linear infinite;
+
+}
+
+/* ====================== */
+
+.brain-grid{
+
+position:absolute;
+
+width:120px;
+
+height:120px;
+
+border-radius:50%;
+
+background:
+
+repeating-radial-gradient(
+
+circle,
+
+rgba(0,255,255,.12),
+
+rgba(0,255,255,.12) 2px,
+
+transparent 4px,
+
+transparent 12px);
+
+animation:rotate2 14s linear infinite;
+
+}
+
+/* ====================== */
+
+.brain-light{
+
+position:absolute;
+
+width:95px;
+
+height:95px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(circle,
+
+#ffffff,
+
+#72ffff,
+
+#00c8ff,
+
+#0066ff);
+
+box-shadow:
+
+0 0 20px cyan,
+
+0 0 45px cyan,
+
+0 0 100px cyan;
+
+animation:brainPulse 2.5s infinite;
+
+}
+
+/* ====================== */
+
+.center-core{
+
+position:absolute;
+
+width:25px;
+
+height:25px;
+
+border-radius:50%;
+
+background:white;
+
+box-shadow:
+
+0 0 25px white,
+
+0 0 45px cyan;
+
+}
+
+/* ====================== */
+
+.pulse-ring{
+
+position:absolute;
+
+border-radius:50%;
+
+border:1px solid rgba(0,255,255,.35);
+
+}
+
+.pulse1{
+
+width:170px;
+
+height:170px;
+
+animation:pulse 3s infinite;
+
+}
+
+.pulse2{
+
+width:200px;
+
+height:200px;
+
+animation:pulse 3s infinite 1.5s;
+
+}
+
+/* ====================== */
+
+.energy{
+
+position:absolute;
+
+width:4px;
+
+height:34px;
+
+background:
+
+linear-gradient(
+
+transparent,
+
+cyan,
+
+transparent);
+
+box-shadow:
+
+0 0 12px cyan;
+
+}
+
+.e1{
+
+top:8px;
+
+}
+
+.e2{
+
+bottom:8px;
+
+}
+
+.e3{
+
+left:8px;
+
+transform:rotate(90deg);
+
+}
+
+.e4{
+
+right:8px;
+
+transform:rotate(90deg);
+
+}
+
+/* ====================== */
+
+.status-text{
+
+position:absolute;
+
+bottom:-40px;
+
+font-size:13px;
+
+letter-spacing:4px;
+
+color:#8ffeff;
+
+}
+
+/* ====================== */
+
+@keyframes glow{
+
+50%{
+
+transform:scale(1.15);
+
+opacity:.7;
+
+}
+
+}
+
+@keyframes brainPulse{
+
+50%{
+
+transform:scale(1.08);
+
+}
+
+}
+
+@keyframes rotate1{
+
+from{
+
+transform:rotate(0deg);
+
+}
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+@keyframes rotate2{
+
+from{
+
+transform:rotate(360deg);
+
+}
+
+to{
+
+transform:rotate(0deg);
+
+}
+
+}
+
+@keyframes pulse{
+
+0%{
+
+transform:scale(.8);
+
+opacity:.8;
+
+}
+
+100%{
+
+transform:scale(1.3);
+
+opacity:0;
+
+}
+}

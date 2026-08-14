@@ -289,7 +289,7 @@ const activeRef = useRef(false);
 
       recognition.lang =
         mode === "wake"
-          ? "en-US"
+          ? "en-IN"
           : languageCode;
 
      recognition.onstart = () => {

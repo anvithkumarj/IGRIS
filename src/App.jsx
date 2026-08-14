@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 const API_BASE_URL = import.meta.env.DEV
   ? "http://localhost:3001"
-  : "";
+  : "https://igris-srfd.onrender.com";
 
 const LANGUAGE_CONFIG = {
   English: { code: "en-US", native: "English" },

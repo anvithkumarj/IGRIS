@@ -8,26 +8,10 @@ const LANGUAGE_CONFIG = {
   English: { code: "en-US", native: "English" },
   Telugu: { code: "te-IN", native: "తెలుగు" },
   Hindi: { code: "hi-IN", native: "हिन्दी" },
-  Tamil: { code: "ta-IN", native: "தமிழ்" },
+  Tamil: { code: "ta-IN", native: "தమిழ்" },
   Kannada: { code: "kn-IN", native: "ಕನ್ನಡ" },
   Malayalam: { code: "ml-IN", native: "മലയാളം" },
 };
-
-const WAKE_WORDS = [
-  "arise",
-  "a rise",
-  "arise igris",
-  "arrise",
-  "aris",
-  "ariss",
-  "arrays",
-  "array",
-  "erase",
-  "rice",
-  "our eyes",
-  "a race",
-  "a rays",
-];
 
 const BOOT_STEPS = [
   "REACTOR ONLINE",
@@ -38,15 +22,6 @@ const BOOT_STEPS = [
   "INTELLIGENCE MODULES LOADED",
   "INTERFACE SYNCHRONIZED",
 ];
-
-const ACKNOWLEDGEMENTS = {
-  English: "At your command.",
-  Telugu: "మీ ఆదేశం కోసం సిద్ధంగా ఉన్నాను.",
-  Hindi: "आपके आदेश के लिए तैयार हूँ।",
-  Tamil: "உங்கள் கட்டளைக்காக தயாராக இருக்கிறேன்.",
-  Kannada: "ನಿಮ್ಮ ಆದೇಶಕ್ಕಾಗಿ ಸಿದ್ಧವಾಗಿದ್ದೇನೆ.",
-  Malayalam: "നിങ്ങളുടെ ആജ്ഞയ്ക്കായി തയ്യാറാണ്.",
-};
 
 const getSavedUser = () => {
   try {
@@ -642,87 +617,46 @@ recognition.onresult = (event) => {
   ]);
 
   const handleRecognizedSpeech =
-    useCallback(
-      (text, mode) => {
-        const normalized = text
-          .toLowerCase()
-          .replace(/[.,!?]/g, " ")
-          .replace(/\s+/g, " ")
-          .trim();
+  useCallback(
+    (text) => {
+      const normalized = text
+        .toLowerCase()
+        .replace(/[.,!?]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
 
-        setTranscript(text);
+      setTranscript(text);
 
-        if (mode === "wake") {
-          const woke =
-            WAKE_WORDS.some((phrase) =>
-              normalized.includes(phrase)
-            );
+      const stopCommands = [
+        "igris rest",
+        "igris standby",
+        "igris stop",
+        "igris sleep",
+        "igres rest",
+        "egress rest",
+      ];
 
-          if (!woke) {
-            addLog(
-              'WAKE WORD NOT DETECTED — LISTENING...'
-            );
+      if (
+        stopCommands.some(
+          (command) =>
+            normalized === command ||
+            normalized.includes(command)
+        )
+      ) {
+        deactivateIgris();
+        return;
+      }
 
-            return;
-          }
+      stopRecognition();
 
-          stopRecognition();
-
-          setStatus("ONLINE");
-
-          addLog(
-            "WAKE WORD ACCEPTED — IGRIS ONLINE"
-          );
-
-          speakBrowser(
-            ACKNOWLEDGEMENTS[language] ||
-              ACKNOWLEDGEMENTS.English,
-            () => {
-              if (activeRef.current) {
-                setTranscript("");
-
-                beginListeningRef.current?.("question");
-              }
-            }
-          );
-
-          return;
-        }
-
-        const stopCommands = [
-          "igris rest",
-          "igris standby",
-          "igris stop",
-          "igris sleep",
-          "igres rest",
-          "egress rest",
-        ];
-
-        if (
-          stopCommands.some(
-            (command) =>
-              normalized === command ||
-              normalized.includes(command)
-          )
-        ) {
-          deactivateIgris();
-          return;
-        }
-
-        stopRecognition();
-
-        sendQuestion(text);
-      },
-      [
-        addLog,
-        beginListeningRef,
-        deactivateIgris,
-        language,
-        sendQuestion,
-        speakBrowser,
-        stopRecognition,
-      ]
-    );
+      sendQuestion(text);
+    },
+    [
+      deactivateIgris,
+      sendQuestion,
+      stopRecognition,
+    ]
+  );
 
   useEffect(() => {
     handleRecognizedSpeechRef.current =
@@ -777,13 +711,14 @@ recognition.onresult = (event) => {
 
     setIgrisReply("");
 
-    setStatus("AWAITING WAKE");
+    setStatus("LISTENING");
 
-    addLog(
-      'IGRIS ACTIVE — SAY "ARISE"'
-    );
+addLog(
+  "IGRIS ACTIVE — LISTENING FOR COMMAND"
+);
 
-    beginListeningRef.current?.("wake");
+beginListeningRef.current?.("question");
+
   } catch (error) {
     console.error(
       "Microphone activation failed:",

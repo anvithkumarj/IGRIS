@@ -1,15 +1,30 @@
-self.addEventListener('install', () => {
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim());
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    self.clients.claim()
+  );
 });
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") {
+    return;
+  }
 
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    fetch(event.request).catch(() => {
+      return new Response(
+        "Network unavailable",
+        {
+          status: 503,
+          statusText: "Network Unavailable",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+    })
   );
 });

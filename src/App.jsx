@@ -189,42 +189,82 @@ const activeRef = useRef(false);
   );
 
   const playServerAudio = useCallback(
-    async (audioPath, fallbackText, onEnd) => {
-      if (!audioPath) {
-        speakBrowser(fallbackText, onEnd);
-        return;
-      }
+  async (audioPath, fallbackText, onEnd) => {
+    if (!audioPath) {
+      speakBrowser(fallbackText, onEnd);
+      return;
+    }
 
-      try {
-        const audioUrl =
-          /^https?:\/\//i.test(audioPath)
-            ? audioPath
-            : `${API_BASE_URL}${audioPath}`;
+    const audioUrl =
+      /^https?:\/\//i.test(audioPath)
+        ? audioPath
+        : `${API_BASE_URL}${audioPath}`;
 
-        const audio = new Audio(audioUrl);
+    try {
+      const audio = new Audio();
 
-        speakingRef.current = true;
+      audio.preload = "auto";
+      audio.src = audioUrl;
 
-        setStatus("SPEAKING");
+      speakingRef.current = true;
 
-        audio.onended = () => {
-          speakingRef.current = false;
-          onEnd?.();
-        };
+      setStatus("SPEAKING");
 
-        audio.onerror = () => {
-          speakingRef.current = false;
-          speakBrowser(fallbackText, onEnd);
-        };
-
-        await audio.play();
-      } catch {
+      audio.onended = () => {
         speakingRef.current = false;
-        speakBrowser(fallbackText, onEnd);
-      }
-    },
-    [speakBrowser]
-  );
+        onEnd?.();
+      };
+
+      audio.onerror = (event) => {
+        console.error(
+          "IGRIS AUDIO ERROR:",
+          event
+        );
+
+        speakingRef.current = false;
+
+        speakBrowser(
+          fallbackText,
+          onEnd
+        );
+      };
+
+      audio.oncanplaythrough = async () => {
+        try {
+          await audio.play();
+        } catch (error) {
+          console.error(
+            "IGRIS AUDIO PLAY ERROR:",
+            error
+          );
+
+          speakingRef.current = false;
+
+          speakBrowser(
+            fallbackText,
+            onEnd
+          );
+        }
+      };
+
+      audio.load();
+
+    } catch (error) {
+      console.error(
+        "IGRIS AUDIO SETUP ERROR:",
+        error
+      );
+
+      speakingRef.current = false;
+
+      speakBrowser(
+        fallbackText,
+        onEnd
+      );
+    }
+  },
+  [speakBrowser]
+);
 
   const beginListening = useCallback(
     (mode = "wake") => {

@@ -292,60 +292,100 @@ const activeRef = useRef(false);
           ? "en-US"
           : languageCode;
 
-      recognition.onstart = () => {
-        if (
-          !mountedRef.current ||
-          !activeRef.current
-        ) {
-          return;
-        }
+     recognition.onstart = () => {
+  if (
+    !mountedRef.current ||
+    !activeRef.current
+  ) {
+    return;
+  }
 
-        setStatus(
-          mode === "wake"
-            ? "AWAITING WAKE"
-            : "LISTENING"
-        );
+  setStatus(
+    mode === "wake"
+      ? "AWAITING WAKE"
+      : "LISTENING"
+  );
 
-        addLog(
-          mode === "wake"
-            ? 'LISTENING FOR "ARISE"...'
-            : "LISTENING FOR COMMAND..."
-        );
-      };
+  addLog(
+    mode === "wake"
+      ? 'LISTENING FOR "ARISE"...'
+      : "LISTENING FOR COMMAND..."
+  );
 
-      recognition.onresult = (event) => {
-        let finalText = "";
-        let interimText = "";
+  addLog("🎤 AUDIO CAPTURE STARTED");
+};
 
-        for (
-          let i = event.resultIndex;
-          i < event.results.length;
-          i += 1
-        ) {
-          const chunk =
-            event.results[i][0]?.transcript || "";
+recognition.onaudiostart = () => {
+  addLog("🎤 AUDIO STREAM STARTED");
+};
 
-          if (event.results[i].isFinal) {
-            finalText += `${chunk} `;
-          } else {
-            interimText += chunk;
-          }
-        }
+recognition.onsoundstart = () => {
+  addLog("🔊 SOUND DETECTED");
+};
 
-        const liveText =
-          `${finalText} ${interimText}`.trim();
+recognition.onspeechstart = () => {
+  addLog("🗣️ SPEECH DETECTED");
+};
 
-        if (liveText) {
-          setTranscript(liveText);
-        }
+recognition.onspeechend = () => {
+  addLog("🗣️ SPEECH ENDED");
+};
 
-        if (!finalText.trim()) {
-          return;
-        }
+recognition.onsoundend = () => {
+  addLog("🔇 SOUND ENDED");
+};
 
-handleRecognizedSpeechRef.current?.(finalText.trim(), mode);
-      };
+recognition.onaudioend = () => {
+  addLog("🎤 AUDIO CAPTURE ENDED");
+};
 
+recognition.onnomatch = () => {
+  addLog("⚠️ SPEECH NOT RECOGNIZED");
+};
+
+recognition.onresult = (event) => {
+  let finalText = "";
+  let interimText = "";
+
+  for (
+    let i = event.resultIndex;
+    i < event.results.length;
+    i += 1
+  ) {
+    const chunk =
+      event.results[i][0]?.transcript || "";
+
+    if (event.results[i].isFinal) {
+      finalText += `${chunk} `;
+    } else {
+      interimText += chunk;
+    }
+  }
+
+  const liveText =
+    `${finalText} ${interimText}`.trim();
+
+  if (liveText) {
+    setTranscript(liveText);
+
+    addLog(
+      `🎧 HEARD: "${liveText}"`
+    );
+  }
+
+  if (!finalText.trim()) {
+    return;
+  }
+
+  addLog(
+    `✅ FINAL: "${finalText.trim()}"`
+  );
+
+  handleRecognizedSpeechRef.current?.(
+    finalText.trim(),
+    mode
+  );
+};
       recognition.onerror = (event) => {
         if (!mountedRef.current) {
           return;

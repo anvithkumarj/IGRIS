@@ -12,7 +12,10 @@ import { env } from 'node:process'
 dotenv.config()
 
 const app = express()
-const PORT = globalThis.process?.env?.PORT || 3001;
+const PORT = process.env.PORT || 10000; // fallback if PORT not set
+app.listen(PORT, () => {
+  console.log(`🚀 IGRIS AI SERVER ONLINE on port ${PORT}`);
+});
 
 // =========================
 // PATHS

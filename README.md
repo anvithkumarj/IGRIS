@@ -1,16 +1,111 @@
-# React + Vite
+# ⚔️ IGRIS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **An intelligent voice-driven AI assistant interface inspired by the presence and command system of Igris.**
 
-Currently, two official plugins are available:
+Igris is a modern AI assistant interface built with **React and Vite**, designed around a futuristic command-center experience. It combines conversational AI, voice interaction, speech recognition, multilingual communication, audio responses, and a highly immersive HUD-style interface.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The goal of Igris is simple:
 
-## React Compiler
+**You speak. Igris listens. You command. Igris responds.**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🎙️ Voice Interaction
+- Wake-word activation using **"Igris"**
+- Voice-based conversations
+- Microphone input through the browser
+- Speech recognition and transcription
+- Continuous listening support
+- Real-time recognition feedback
+
+### 🧠 Conversational AI
+- Ask questions naturally using voice or text
+- AI-generated responses
+- Conversation history displayed inside the interface
+- Supports communication in the user's preferred language
+- Multilingual speech interaction
+
+### 🔊 Voice Responses
+- AI responses can be converted into speech
+- Audio playback directly through the interface
+- Designed for a hands-free assistant experience
+
+### 🖥️ Futuristic Interface
+- Custom Igris-themed HUD
+- Animated AI core
+- Dynamic rings and waveform visualizations
+- System console
+- Status indicators
+- Interactive control panels
+- Responsive layout
+
+### ⚡ Modern Web Stack
+- React
+- Vite
+- Node.js
+- Express
+- Web Speech API
+- REST API communication
+- Modular component architecture
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| **React** | Frontend UI and application logic |
+| **Vite** | Development server and production bundling |
+| **Node.js** | Backend runtime |
+| **Express** | Backend API server |
+| **JavaScript** | Application logic |
+| **CSS** | HUD interface and animations |
+| **Web Speech API** | Voice recognition and speech interaction |
+| **Git & GitHub** | Version control and source management |
+
+---
+
+## 📁 Project Structure
+
+```text
+IGRIS/
+│
+├── public/
+│   ├── favicon.svg
+│   ├── icons.svg
+│   └── igris-logo.png
+│
+├── server/
+│   ├── audio/
+│   └── server.js
+│
+├── src/
+│   ├── components/
+│   │   ├── AICore.jsx
+│   │   ├── BootScreen.jsx
+│   │   ├── Buttons.jsx
+│   │   ├── Console.jsx
+│   │   ├── ConversationalPanel.jsx
+│   │   ├── Core.jsx
+│   │   ├── HUD.jsx
+│   │   ├── InfoPanel.jsx
+│   │   ├── LeftPanel.jsx
+│   │   ├── RightPanel.jsx
+│   │   ├── Rings.jsx
+│   │   ├── TopBar.jsx
+│   │   └── Wave.jsx
+│   │
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.css
+│   └── main.jsx
+│
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package.json
+├── package-lock.json
+├── README.md
+└── vite.config.js
